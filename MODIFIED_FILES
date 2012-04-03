@@ -1,0 +1,4 @@
+
+from the GlobaLeaks official package, are modified the following files by the virtual-environment-init.sh script:
+
+globaleaks/scripts/debian.globaleaks.init.sh
