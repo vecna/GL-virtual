@@ -6,9 +6,9 @@ GlobaLeaks is the first Open Source Whistleblowing Framework.
 It empowers anyone to easily setup and maintain their own Whistleblowing platform. It is also a collection of what are the best practices for people receiveiving and submitting material. GlobaLeaks works in various environments: media, activism, corporations, public agencies.
 
 ## DISCLAIMER
-## GlobaLeaks is under Development
-## In this repository, there are only the script used to correctly generated GlobaLeaks01-UbuntuServer-11.00-VirtualBox
-## If you're not interested in development or security check, maybe you need simply download the generated image here:
+GlobaLeaks is under Development
+In this repository, there are only the script used to correctly generated GlobaLeaks01-UbuntuServer-11.00-VirtualBox
+If you're not interested in development or security check, maybe you need simply download the generated image here:
 
 http://TODO
 
@@ -20,7 +20,7 @@ http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html
 
 The following steps are required only if you want install GL environment in your virtual box. If you're using the image provided by GlobaLeaks, jump to the next step "Basic Setup"
 
-You need setup the Host-only networking (File -> Preferences -> Network -> + Host-only Networks) the IP address expected is 172.16.254.1, and provide DHCP service in lower/upper both 172.16.254.2
+You need setup the Host-only networking (File -> Preferences -> Network -> + Host-only Networks) the IP address expected is 172.16.254.1, (the virtualbox is setupped to use 172.16.254.2/255.255.255.0)
 
 You need to give routing from the VirtualBox to the outside:
 
