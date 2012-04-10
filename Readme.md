@@ -3,7 +3,12 @@ GlobaLeaks - Virtual Edition - Install Script ONLY
 
 GlobaLeaks is the first Open Source Whistleblowing Framework.
 
-It empowers anyone to easily setup and maintain their own Whistleblowing platform. It is also a collection of what are the best practices for people receiveiving and submitting material. GlobaLeaks works in various environments: media, activism, corporations, public agencies.
+It empowers anyone to easily setup and maintain their own Whistleblowing platform. It is also a collection of what are the best practices for people receiveiving and submitting material. GlobaLeaks works in various environments: media, activism, corporations, public agencies. 
+
+In the GlobaLeaks main repository, the 'master' release has a CSS/Template put by a GL-adopters, which we has been focused as first use case. Anyway, for the Virtual Machine distribution, the release without this CSS has been used.
+
+This repository commit: https://github.com/globaleaks/GlobaLeaks/zipball/ee09eae54694c662d299824a199f377a59dccd3c is become the master ahead of 
+http://github.com/vecna/GlobaLeaks.git (fork from GlobaLeaks repository) and some bugfix/customization studied for VM complete and easy usage.
 
 ## DISCLAIMER
 GlobaLeaks is under Development
@@ -24,8 +29,13 @@ You need setup the Host-only networking (File -> Preferences -> Network -> + Hos
 
 You need to give routing from the VirtualBox to the outside:
 
+	vim /etc/sysctl.conf
+	# uncomment this line:
+	net.ipv4.ip_forward=1
+
+and the masquerade rule:
+
 	iptables -t nat -A POSTROUTING -s 172.16.254.0/24 -o $YOURDEFAULTGWINTERFACE -j MASQUERADE
-	echo 1 > /proc/sys/net/ipv4/ip_forward
 
 Oracle HowTo about setup the Host-only networking is here: http://www.virtualbox.org/manual/ch06.html#network_hostonly
 
@@ -42,12 +52,13 @@ login password: ubuntu/reverse (and "su" on it)
 
 then you will find running as a web service the following:
 
-TODO
+*  whistleblowing interface binds to http://172.16.254.2:8000
+*  node administrator targets configuratation http://172.16.254.2:8000/globaleaks/admin/
 
-*  whistleblowing interface binds to http://127.0.0.1:8000
-*  node administrator targets configuratation http://127.0.0.1:8000/globaleaks/admin/
-*  debug only global view interface: http://127.0.0.1:8000/globalview
-*  web2py developer access: http://127.0.0.1:8000/admin password "globaleaks"
+those interface shall be present but only in debug mode (not enabled by default, edit globaleaks.conf by hand)
+
+*  debug only global view interface: http://172.16.254.2:8000/globalview
+*  web2py developer access: http://172.16.254.2:8000/admin password "globaleaks"
 
 Basic Setup - mandatory configuration
 -------------------------------------
