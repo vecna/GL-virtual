@@ -73,6 +73,7 @@ When you open the first time http://172.16.254.2:8000, some information are requ
 *  email sender: (name and address) make the notification email appears from: "Sender Name <sender@address.tld>"
 *  email login: with the format "username_or_email_auth:password", the ':' character inside the password is not usable
 *  description: HTML meta description, text useful for the search engine 
+*  baseurl: http://yourweb.net/yoursubdir used for compose the URL in the mail notification
 
 After those information setup, you need to reboot the GL virtual box. After the reboot, the Tor hidden service shall be initialized, and connecting to http://172.16.254.2:8000 you can set the administrative password, modify the previously configured settings.
 
