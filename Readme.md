@@ -15,7 +15,7 @@ GlobaLeaks is under Development
 In this repository, there are only the script used to correctly generated GlobaLeaks01-UbuntuServer-11.00-VirtualBox
 If you're not interested in development or security check, maybe you need simply download the generated image here:
 
-http://TODO
+	wget "http://downloads.sourceforge.net/project/virtualboximage/UbuntuServer/11.10/ubuntu-server-11.10-x86.7z?r=http%3A%2F%2Fvirtualboxes.org%2Fimages%2Fubuntu-server%2F&ts=1332109332&use_mirror=netcologne"
 
 Installation
 ============
@@ -63,4 +63,18 @@ those interface shall be present but only in debug mode (not enabled by default,
 Basic Setup - mandatory configuration
 -------------------------------------
 
-TODO
+When you open the first time http://172.16.254.2:8000, some information are requested for setup GlobaLeaks:
+
+*  service name: the short name of your initiative, this value shall be present in the email notification sent by your GL node.
+*  title: your GlobaLeaks name, headline.
+*  subtitle: appears in every page, below the title.
+*  email server: host:port of an SMTP or SMTPs services awiting mail to send. 
+*  email SSL: enable SSL if supported by your email server (Gmail or GMX supports that)
+*  email sender: (name and address) make the notification email appears from: "Sender Name <sender@address.tld>"
+*  email login: with the format "username_or_email_auth:password", the ':' character inside the password is not usable
+*  description: HTML meta description, text useful for the search engine 
+
+After those information setup, you need to reboot the GL virtual box. After the reboot, the Tor hidden service shall be initialized, and connecting to http://172.16.254.2:8000 you can set the administrative password, modify the previously configured settings.
+
+*  administrastive password: required for login as GL node administrator
+
