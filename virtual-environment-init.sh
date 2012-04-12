@@ -100,17 +100,16 @@ adduser --ingroup globaleaks --disabled-login --quiet --system globaleaks
 
 
 echo "${red}cloning GlobaLeaks repository${c1}"
+GL01="/home/globaleaks/GL-01/"
 cd /home/globaleaks
-if_exist_remove "/home/globaleaks/GlobaLeaks"
+if_exist_remove "$GL01"
 if_exist_remove "/home/globaleaks/master"
 # this is the latest good release before the JV-template, we had no time for fix it
 # wget https://github.com/globaleaks/GlobaLeaks/zipball/ee09eae54694c662d299824a199f377a59dccd3c
 # I've forked to apply some bugfix, without change the "master" branch of GL, because I need a clean template here
 wget https://github.com/vecna/GlobaLeaks/zipball/master
-mv master globaleaks-01-virtual.zip
-unzip globaleaks-01-virtual.zip
+unzip master
 mv vecna-GlobaLeaks-*/ GL-01
-GL01="/home/globaleaks/GL-01/"
 
 echo "${red}Creating Tor hidden service..${c1}"
 if_exist_remove "/home/globaleaks/HS"
@@ -120,7 +119,7 @@ chown debian-tor.debian-tor /home/globaleaks/HS
 TORRC="/etc/tor/torrc"
 make_copy_or_restore $TORRC
 echo "HiddenServiceDir /home/globaleaks/HS" >> $TORRC
-echo "HiddenServicePort 10000 127.0.0.1:8000" >> $TORRC
+echo "HiddenServicePort 10000 172.16.254.2:8000" >> $TORRC
 echo "${red}Configured Tor to start with an hidden service: the first start would happen only when GlobaLeaks node is configured${c1}"
 /etc/init.d/tor stop
 update-rc.d tor disable
@@ -128,7 +127,7 @@ echo "${red}Disabling autostart for Tor service (would be setup only during the 
 
 cd $GL01
 INIS="/etc/init.d/globaleaks"
-SOURCE="$GL01/globaleaks/scripts/globaleaks.debian.init.sh"
+SOURCE="$GL01/globaleaks/scripts/init.globaleaks.sh"
 if_exist_remove $INIS
 check_required_file $SOURCE "not found in repository the required script!"
 cp $SOURCE $INIS
