@@ -3,6 +3,14 @@ GlobaLeaks - Virtual Edition - Install Script ONLY
 
 GlobaLeaks is the first Open Source Whistleblowing Framework.
 
+If you're looking for download the GlobaLeaks Virtual Image: you're in the wrong section :)
+===========================================================================================
+
+download the image from https://github.com/globaleaks/GL-Virtual-Image
+
+What's GlobaLeaks
+=================
+
 It empowers anyone to easily setup and maintain their own Whistleblowing platform. It is also a collection of what are the best practices for people receiveiving and submitting material. GlobaLeaks works in various environments: media, activism, corporations, public agencies. 
 
 In the GlobaLeaks main repository, the 'master' release has a CSS/Template put by a GL-adopters, which we has been focused as first use case. Anyway, for the Virtual Machine distribution, the release without this CSS has been used.
@@ -16,6 +24,8 @@ In this repository, there are only the script used to correctly generated GlobaL
 If you're not interested in development or security check, maybe you need simply download the generated image here:
 
 	wget "http://downloads.sourceforge.net/project/virtualboximage/UbuntuServer/11.10/ubuntu-server-11.10-x86.7z?r=http%3A%2F%2Fvirtualboxes.org%2Fimages%2Fubuntu-server%2F&ts=1332109332&use_mirror=netcologne"
+
+and inside the fresh VM, apply the shell script provide in this package. Remind that the setup of GlobaLeaks start the first time you complete the administrative form with the right content.
 
 Installation
 ============
@@ -36,6 +46,8 @@ You need to give routing from the VirtualBox to the outside:
 and the masquerade rule:
 
 	iptables -t nat -A POSTROUTING -s 172.16.254.0/24 -o $YOURDEFAULTGWINTERFACE -j MASQUERADE
+
+the netmask 172.16.254.0/255.255.255.0 is hardcoded in this release, and the VirtuaBox need this configuration supports. You can't change this (this is one of the bad thing in a 0.1-advanced-prototype release)
 
 Oracle HowTo about setup the Host-only networking is here: http://www.virtualbox.org/manual/ch06.html#network_hostonly
 
@@ -58,7 +70,7 @@ then you will find running as a web service the following:
 those interface shall be present but only in debug mode (not enabled by default, edit globaleaks.conf by hand)
 
 *  debug only global view interface: http://172.16.254.2:8000/globalview
-*  web2py developer access: http://172.16.254.2:8000/admin password "globaleaks"
+*  web2py developer access: http://172.16.254.2:8000/admin is enable only if you set a password in globaleaks.conf (admin_password isthe field, and this access permit also to checks error)
 
 Basic Setup - mandatory configuration
 -------------------------------------
@@ -77,5 +89,9 @@ When you open the first time http://172.16.254.2:8000, some information are requ
 
 After those information setup, you need to reboot the GL virtual box. After the reboot, the Tor hidden service shall be initialized, and connecting to http://172.16.254.2:8000 you can set the administrative password, modify the previously configured settings.
 
-*  administrastive password: required for login as GL node administrator
+*  administrastive password: required for login as GL node administrator (add receiver, checks status, etc)
 
+What's missing ? 
+----------------
+
+Every other thing. Seriously, neither the http access stats are easily available.

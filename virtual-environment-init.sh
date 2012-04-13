@@ -53,22 +53,23 @@ else
 	echo "${red}Ok, I'm root, installation possible ${c1}"
 fi
 
+
 IFACEFILE="/etc/network/interfaces"
 echo "${red}writing network defaults in $IFACEFILE${c1}"
 make_copy_or_restore $IFACEFILE 
 echo "auto lo" > $IFACEFILE
 echo "iface lo inet loopback" >> $IFACEFILE
-echo "auto eth2" >> $IFACEFILE
-echo "iface eth2 inet static" >> $IFACEFILE
+echo "auto eth0" >> $IFACEFILE
+echo "iface eth0 inet static" >> $IFACEFILE
 echo "address $HOSTIP" >> $IFACEFILE
 echo "network 172.16.254.0" >> $IFACEFILE
 echo "netmask 255.255.255.0" >> $IFACEFILE
 echo "broadcast $HOSTIP" >> $IFACEFILE
 echo "gateway 172.16.254.1" >> $IFACEFILE
 
-echo "${red}writing network defaults in $IFACEFILE and restart eth2 interface ${c1}"
-ifdown eth2
-ifup eth2
+echo "${red}writing network defaults in $IFACEFILE and restart eth0 interface ${c1}"
+ifdown eth0
+ifup eth0
 
 echo "${red}Modify /etc/hosts (hostbox and globalx-vm) ${c1}"
 make_copy_or_restore "/etc/hosts"
