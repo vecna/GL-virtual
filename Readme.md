@@ -20,15 +20,14 @@ http://github.com/vecna/GlobaLeaks.git (fork from GlobaLeaks repository) and som
 
 ## DISCLAIMER
 GlobaLeaks is under Development
+
 In this repository, there are only the script used to correctly generated GlobaLeaks01-UbuntuServer-11.00-VirtualBox
 If you're not interested in development or security check, maybe you need simply download the generated image here:
 
-	wget "http://downloads.sourceforge.net/project/virtualboximage/UbuntuServer/11.10/ubuntu-server-11.10-x86.7z?r=http%3A%2F%2Fvirtualboxes.org%2Fimages%2Fubuntu-server%2F&ts=1332109332&use_mirror=netcologne"
+	THE VIRTUAL IMAGE IS UNDER CREATION - SOON SHALL BE READY
 
-and inside the fresh VM, apply the shell script provide in this package. Remind that the setup of GlobaLeaks start the first time you complete the administrative form with the right content.
-
-Installation
-============
+Your server-desktop setup
+=========================
 
 You need to download Oracle VirtualBox Manager from:
 http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html
@@ -37,7 +36,7 @@ The following steps are required only if you want install GL environment in your
 
 You need setup the Host-only networking (File -> Preferences -> Network -> + Host-only Networks) the IP address expected is 172.16.254.1, (the virtualbox is setupped to use 172.16.254.2/255.255.255.0)
 
-You need to give routing from the VirtualBox to the outside:
+You need to give routing from the VirtualBox to the outside (Linux):
 
 	vim /etc/sysctl.conf
 	# uncomment this line:
@@ -51,29 +50,13 @@ the netmask 172.16.254.0/255.255.255.0 is hardcoded in this release, and the Vir
 
 Oracle HowTo about setup the Host-only networking is here: http://www.virtualbox.org/manual/ch06.html#network_hostonly
 
-(Is indifferent if you're installing GlobaLeaks Virtual in a desktop environment or in a server, so get the best VirtualBox manager for your needs)
+GlobaLeaks Basic Setup - mandatory configuration
+------------------------------------------------
 
-and Ubuntu Server image for VirtualBox
-http://downloads.sourceforge.net/project/virtualboximage/UbuntuServer/11.10/ubuntu-server-11.10-x86.7z?r=http%3A%2F%2Fvirtualboxes.org%2Fimages%2Fubuntu-server%2F&ts=1332109332&use_mirror=netcologne
+Download GL-Virtual-Image (THE VIRTUAL IMAGE IS NOT YET READY)
 
-login password: ubuntu/reverse (and "su" on it)
-
-	git clone http://github.com/vecna/GL-virtual.git
-	cd GL-virtual
-	./virtual-environment-init.sh
-
-then you will find running as a web service the following:
-
-*  whistleblowing interface binds to http://172.16.254.2:8000
-*  node administrator targets configuratation http://172.16.254.2:8000/globaleaks/admin/
-
-those interface shall be present but only in debug mode (not enabled by default, edit globaleaks.conf by hand)
-
-*  debug only global view interface: http://172.16.254.2:8000/globalview
-*  web2py developer access: http://172.16.254.2:8000/admin is enable only if you set a password in globaleaks.conf (admin_password isthe field, and this access permit also to checks error)
-
-Basic Setup - mandatory configuration
--------------------------------------
+having a vboxnet0 interface with the address 172.16.254.1 (this value is hardcoded in the virtualbox
+and expected as default gateway IP addr), the address assigned in the virtualbox is 172.16.254.2
 
 When you open the first time http://172.16.254.2:8000, some information are requested for setup GlobaLeaks:
 
@@ -91,7 +74,37 @@ After those information setup, you need to reboot the GL virtual box. After the 
 
 *  administrastive password: required for login as GL node administrator (add receiver, checks status, etc)
 
+Create your own Virtual Box Image (optional)
+============================================
+
+Is indifferent if you're installing GlobaLeaks Virtual in a desktop environment or in a server, so get the best VirtualBox manager for your needs
+
+prerequisite: 7zip, Oracle VirtualBox (http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html) or:
+
+	aptitude install virtualbox-qt
+
+Download Ubuntu Server image for VirtualBox
+
+	wget "http://downloads.sourceforge.net/project/virtualboximage/UbuntuServer/11.10/ubuntu-server-11.10-x86.7z"
+	7zr x ubuntu-server-11.10-x86.7z
+
+Login password: ubuntu/reverse, user "ubuntu" its sudoers
+
+	git clone http://github.com/vecna/GL-virtual.git
+	cd GL-virtual
+	./virtual-environment-init.sh
+
+Then you will find running as a web service the following:
+
+*  whistleblowing interface binds to http://172.16.254.2:8000
+*  node administrator receiver & node configuratation http://172.16.254.2:8000/globaleaks/admin/
+
+those interface shall be present but only in debug mode (not enabled by default, edit globaleaks.conf by hand)
+
+*  debug only global view interface: http://172.16.254.2:8000/globalview
+*  web2py developer access: http://172.16.254.2:8000/admin is enable only if you set a password in globaleaks.conf (admin_password isthe field, and this access permit also to checks error)
+
 What's missing ? 
 ----------------
 
-Every other thing. Seriously, neither the http access stats are easily available.
+Every other thing. Seriously, neither the http access stats are easily available. GlobaLeaks 0.1 is a working protoptype of a secure submission system, soon we shall restart the development of a more flexible release.
