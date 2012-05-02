@@ -6,7 +6,10 @@ GlobaLeaks is the first Open Source Whistleblowing Framework.
 If you're looking for download the GlobaLeaks Virtual Image: you're in the wrong section :)
 ===========================================================================================
 
-download the image from https://github.com/globaleaks/GL-Virtual-Image
+download the image from:
+
+	THE VIRTUAL IMAGE IS UNDER CREATION - SOON SHALL BE READY
+
 
 What's GlobaLeaks
 =================
