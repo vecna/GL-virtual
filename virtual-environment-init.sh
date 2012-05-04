@@ -136,7 +136,7 @@ chmod +x $INIS
 chmod +x "$GL01/globaleaks/scripts/globaleaks_os_setup.sh"
 
 echo "${red}Enabling GlobaLeaks service autostart${c1}"
-update-rc.d globaleaks enable
+update-rc.d globaleaks defaults
 
 touch globaleaks/globaleaks.log
 cp globaleaks/defaults/original.globaleaks.conf globaleaks/globaleaks.conf
