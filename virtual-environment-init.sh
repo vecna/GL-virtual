@@ -3,6 +3,7 @@
 red="\033[1;31m"
 c1="\033[47m\033[34m"
 HOSTIP="172.16.254.2"
+GWIP="172.16.254.1"
 
 make_copy_or_restore() 
 {
@@ -65,7 +66,7 @@ echo "address $HOSTIP" >> $IFACEFILE
 echo "network 172.16.254.0" >> $IFACEFILE
 echo "netmask 255.255.255.0" >> $IFACEFILE
 echo "broadcast $HOSTIP" >> $IFACEFILE
-echo "gateway 172.16.254.1" >> $IFACEFILE
+echo "gateway $GWIP" >> $IFACEFILE
 
 echo "${red}writing network defaults in $IFACEFILE and restart eth0 interface ${c1}"
 ifdown eth0
@@ -73,7 +74,7 @@ ifup eth0
 
 echo "${red}Modify /etc/hosts (hostbox and globalx-vm) ${c1}"
 make_copy_or_restore "/etc/hosts"
-echo "172.16.254.1 hostbox " >> /etc/hosts
+echo "$GWIP hostbox " >> /etc/hosts
 echo "$HOSTIP globalx-vm " >> /etc/hosts
 
 RESOLVCFG="/etc/resolv.conf"
@@ -83,10 +84,11 @@ echo "nameserver 194.20.8.4" > $RESOLVCFG
 echo "nameserver 213.92.5.54" >> $RESOLVCFG
 
 echo "${red}Checking network connection, using http://www.globaleaks.org as test${c1}"
+ping -c 1 $GWIP
 cd /tmp
 rm -rf index.html
 wget --timeout=2 http://www.globaleaks.org
-check_required_file "/tmp/index.html" "network not connected: maybe your hostbox is not correctly a gateway ?"
+check_required_file "/tmp/index.html" "network not connected: is your hostbox a gateway (checks routing, forwarding, nat) ?"
 
 cd /root
 echo "${red}Installing python-pip, Tor, unzip${c1}"
@@ -123,8 +125,8 @@ echo "HiddenServiceDir /home/globaleaks/HS" >> $TORRC
 echo "HiddenServicePort 10000 172.16.254.2:8000" >> $TORRC
 echo "${red}Configured Tor to start with an hidden service: the first start would happen only when GlobaLeaks node is configured${c1}"
 /etc/init.d/tor stop
+echo "${red}Disabling autostart for Tor service (would be started by GlobaLeaks init script)${c1}"
 update-rc.d tor disable
-echo "${red}Disabling autostart for Tor service (would be setup only during the GlobaLeaks setup)${c1}"
 
 cd $GL01
 INIS="/etc/init.d/globaleaks"
