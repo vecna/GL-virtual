@@ -46,14 +46,13 @@ echo "maybe you don't want run this shell script, you can download the VirtualBo
 echo "^c to Quit, ENTER to continue..."
 read x
 
-echo "Checking privileges, am I root ?"
-if [ $UID -ne 0 ]; then
-	echo "${red}I'm not root, use sudo -s (default password: reverse)${c1}";
-	exit;
+echo "Checking privileges: am I root ? (user = $USER) "
+if [ $USER != "root" ]; then
+	echo "${red}I'm not root, use sudo -s (default password: reverse)${c1}"
+	exit
 else
 	echo "${red}Ok, I'm root, installation possible ${c1}"
 fi
-
 
 IFACEFILE="/etc/network/interfaces"
 echo "${red}writing network defaults in $IFACEFILE${c1}"
@@ -84,11 +83,14 @@ echo "nameserver 194.20.8.4" > $RESOLVCFG
 echo "nameserver 213.92.5.54" >> $RESOLVCFG
 
 echo "${red}Checking network connection, using http://www.globaleaks.org as test${c1}"
-ping -c 1 $GWIP
-cd /tmp
-rm -rf index.html
-wget --timeout=2 http://www.globaleaks.org
-check_required_file "/tmp/index.html" "network not connected: is your hostbox a gateway (checks routing, forwarding, nat) ?"
+echo "\tYou can bypass this test using the option \"netisfine\""
+if [ -z "$1" -o "$1" != "netisfine" ]; then
+		ping -c 1 $GWIP
+		cd /tmp
+		rm -rf index.html
+		wget --timeout=2 http://www.globaleaks.org
+		check_required_file "/tmp/index.html" "network not connected: is your hostbox a gateway (checks routing, forwarding, nat) ?"
+fi
 
 cd /root
 echo "${red}Installing python-pip, Tor, unzip${c1}"
@@ -99,8 +101,7 @@ pip install web2py
 
 echo "${red}adding globaleaks user and group, and /home/globaleaks base directory for installation${c1}"
 groupadd globaleaks
-adduser --ingroup globaleaks --disabled-login --quiet --system globaleaks
-
+adduser --ingroup globaleaks --disabled-login --disabled-password --quiet --system globaleaks
 
 echo "${red}cloning GlobaLeaks repository${c1}"
 GL01="/home/globaleaks/GL-01/"
@@ -111,7 +112,7 @@ if_exist_remove "/home/globaleaks/master"
 # wget https://github.com/globaleaks/GlobaLeaks/zipball/ee09eae54694c662d299824a199f377a59dccd3c
 # I've forked to apply some bugfix, without change the "master" branch of GL, because I need a clean template here
 wget https://github.com/vecna/GlobaLeaks/zipball/master
-unzip master
+unzip -q master
 mv vecna-GlobaLeaks-*/ GL-01
 
 echo "${red}Creating Tor hidden service..${c1}"
