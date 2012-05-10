@@ -126,7 +126,7 @@ echo "HiddenServicePort 10000 172.16.254.2:8000" >> $TORRC
 echo "${red}Configured Tor to start with an hidden service: the first start would happen only when GlobaLeaks node is configured${c1}"
 /etc/init.d/tor stop
 echo "${red}Disabling autostart for Tor service (would be started by GlobaLeaks init script)${c1}"
-update-rc.d tor disable
+update-rc.d -f tor remove
 
 cd $GL01
 INIS="/etc/init.d/globaleaks"
