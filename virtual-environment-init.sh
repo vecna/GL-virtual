@@ -147,8 +147,6 @@ cp globaleaks/defaults/original.globaleaks.conf globaleaks/globaleaks.conf
 echo "${red}fixing privileges in $GL01 files${c1}"
 chown -R globaleaks.globaleaks .
 
-echo "${red}Starting GlobaLeaks service${c1}"
-/etc/init.d/globaleaks start
-
-echo "${red}From your Host box, connect to http://$HOSTIP:8000${c1}"
+echo "${red}GlobaLeaks service need to do not start now (because otherwise hidden service is initialized)${c1}"
+echo "${red}Reboot, and from your Host box, connect to http://$HOSTIP:8000${c1}"
 echo "${red}You shall continue the setup from the web interface${c1}"
