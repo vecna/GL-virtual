@@ -108,12 +108,9 @@ GL01="/home/globaleaks/GL-01/"
 cd /home/globaleaks
 if_exist_remove "$GL01"
 if_exist_remove "/home/globaleaks/master"
-# this is the latest good release before the JV-template, we had no time for fix it
-# wget https://github.com/globaleaks/GlobaLeaks/zipball/ee09eae54694c662d299824a199f377a59dccd3c
-# I've forked to apply some bugfix, without change the "master" branch of GL, because I need a clean template here
-wget https://github.com/vecna/GlobaLeaks/zipball/master
-unzip -q master
-mv vecna-GlobaLeaks-*/ GL-01
+wget https://github.com/globaleaks/GlobaLeaks/zipball/virtual
+unzip -q virtual
+mv globaleaks-GlobaLeaks-*/ GL-01
 
 echo "${red}Creating Tor hidden service..${c1}"
 if_exist_remove "/home/globaleaks/HS"

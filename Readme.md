@@ -10,7 +10,6 @@ download the image from:
 
 	THE VIRTUAL IMAGE IS UNDER CREATION - SOON SHALL BE READY
 
-
 What's GlobaLeaks
 =================
 
@@ -96,6 +95,10 @@ Login password: ubuntu/reverse, user "ubuntu" its sudoers
 	git clone http://github.com/vecna/GL-virtual.git
 	cd GL-virtual
 	./virtual-environment-init.sh
+
+(for download the 'virtual' branch installed in the box)
+
+    git clone -b virtual http://github.com/globaleaks/GlobaLeaks.git
 
 Then you will find running as a web service the following:
 
