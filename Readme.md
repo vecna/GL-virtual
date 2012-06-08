@@ -12,18 +12,18 @@ download the image from:
 ### Vbox image text description:
 
 This VirtualBox image has been saved for easily permit the GlobaLeaks testing. 
+
 This VirtualBox has been produced downloading: [Ubuntu Server 11.10 - 7zip](http://downloads.sourceforge.net/project/virtualboximage/UbuntuServer/11.10/ubuntu-server-11.10-x86.7z)
+
 Apply the script "virtual-environment-init.sh" from: https://github.com/globaleaks/GlobaLeaks.git **branch virtual**
+
 default login/password: "ubuntu"/"reverse" (part of sudoers users)
 
 # What's GlobaLeaks
 
 It empowers anyone to easily setup and maintain their own Whistleblowing platform. It is also a collection of what are the best practices for people receiveiving and submitting material. GlobaLeaks works in various environments: media, activism, corporations, public agencies. 
 
-In the GlobaLeaks main repository, the 'master' release has a CSS/Template put by a GL-adopters, which we has been focused as first use case. Anyway, for the Virtual Machine distribution, the release without this CSS has been used.
-
-This repository commit: https://github.com/globaleaks/GlobaLeaks/zipball/ee09eae54694c662d299824a199f377a59dccd3c is become the master ahead of 
-http://github.com/vecna/GlobaLeaks.git (fork from GlobaLeaks repository) and some bugfix/customization studied for VM complete and easy usage.
+At the moment, 0.1 release is a feature weak release, and we're working on the 0.2, [project plan](http://wiki.globaleaks.org)
 
 ## DISCLAIMER
 GlobaLeaks is under Development
