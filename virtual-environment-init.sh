@@ -122,7 +122,7 @@ chown debian-tor.debian-tor /home/globaleaks/HS
 TORRC="/etc/tor/torrc"
 make_copy_or_restore $TORRC
 echo "HiddenServiceDir /home/globaleaks/HS" >> $TORRC
-echo "HiddenServicePort 8000 172.16.254.2:8000" >> $TORRC
+echo "HiddenServicePort 80 172.16.254.2:8000" >> $TORRC
 echo "${red}Configured Tor to start with an hidden service: the first start would happen only when GlobaLeaks node is configured${c1}"
 /etc/init.d/tor stop
 echo "${red}Disabling autostart for Tor service (would be started by GlobaLeaks init script)${c1}"
