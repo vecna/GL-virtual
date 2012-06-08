@@ -71,6 +71,8 @@ echo "${red}writing network defaults in $IFACEFILE and restart eth0 interface ${
 ifdown eth0
 ifup eth0
 
+echo "\nGlobaLeaks 0.1 - VirtualBox based on Ubuntu 11.10\n" > /etc/issue
+
 echo "${red}Modify /etc/hosts (hostbox and globalx-vm) ${c1}"
 make_copy_or_restore "/etc/hosts"
 echo "$GWIP hostbox " >> /etc/hosts
