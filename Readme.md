@@ -112,7 +112,9 @@ Login password: ubuntu/reverse, user "ubuntu" its sudoers
 	cd GL-virtual
 	./virtual-environment-init.sh
 
-(for download the 'virtual' branch installed in the box)
+And then reboot!
+
+For download the 'virtual' branch installed in the box, not required if you're using virtual-environment-init.sh
 
     git clone -b virtual http://github.com/globaleaks/GlobaLeaks.git
 
