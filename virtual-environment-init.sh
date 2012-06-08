@@ -128,7 +128,7 @@ update-rc.d -f tor remove
 
 cd $GL01
 INIS="/etc/init.d/globaleaks"
-SOURCE="$GL01/globaleaks/scripts/init.globaleaks.sh"
+SOURCE="$GL01/globaleaks/scripts/globaleaks.debian.init.sh"
 if_exist_remove $INIS
 check_required_file $SOURCE "not found in repository the required script!"
 cp $SOURCE $INIS

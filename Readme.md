@@ -1,17 +1,22 @@
 GlobaLeaks - Virtual Edition - Install Script ONLY
 ==================================================
 
-GlobaLeaks is the first Open Source Whistleblowing Framework.
+GlobaLeaks is the first Open Source Whistleblowing Framework. It is focused in flexibility and security, and this 0.1 release in an advanced prototype (read: *not yet a complete release*).
 
-If you're looking for download the GlobaLeaks Virtual Image: you're in the wrong section :)
-===========================================================================================
+## If you're looking for download the GlobaLeaks Virtual Image: you're in the wrong section :)
 
 download the image from:
 
 	THE VIRTUAL IMAGE IS UNDER CREATION - SOON SHALL BE READY
 
-What's GlobaLeaks
-=================
+### Vbox image text description:
+
+This VirtualBox image has been saved for easily permit the GlobaLeaks testing. 
+This VirtualBox has been produced downloading: [Ubuntu Server 11.10 - 7zip](http://downloads.sourceforge.net/project/virtualboximage/UbuntuServer/11.10/ubuntu-server-11.10-x86.7z)
+Apply the script "virtual-environment-init.sh" from: https://github.com/globaleaks/GlobaLeaks.git **branch virtual**
+default login/password: "ubuntu"/"reverse" (part of sudoers users)
+
+# What's GlobaLeaks
 
 It empowers anyone to easily setup and maintain their own Whistleblowing platform. It is also a collection of what are the best practices for people receiveiving and submitting material. GlobaLeaks works in various environments: media, activism, corporations, public agencies. 
 
@@ -28,8 +33,7 @@ If you're not interested in development or security check, maybe you need simply
 
 	THE VIRTUAL IMAGE IS UNDER CREATION - SOON SHALL BE READY
 
-Your server-desktop setup
-=========================
+## Setup GlobaLeaks in your desktop, using the Virtual Image
 
 You need to download Oracle VirtualBox Manager from:
 http://www.oracle.com/technetwork/server-storage/virtualbox/downloads/index.html
@@ -52,8 +56,7 @@ the netmask 172.16.254.0/255.255.255.0 is hardcoded in this release, and the Vir
 
 Oracle HowTo about setup the Host-only networking is here: http://www.virtualbox.org/manual/ch06.html#network_hostonly
 
-GlobaLeaks Basic Setup - mandatory configuration
-------------------------------------------------
+## GlobaLeaks Basic Setup - mandatory configuration
 
 Download GL-Virtual-Image (THE VIRTUAL IMAGE IS NOT YET READY)
 
@@ -76,8 +79,7 @@ After those information setup, you need to reboot the GL virtual box. After the 
 
 *  administrastive password: required for login as GL node administrator (add receiver, checks status, etc)
 
-Create your own Virtual Box Image (optional)
-============================================
+## Create your own Virtual Box Image (optional)
 
 Is indifferent if you're installing GlobaLeaks Virtual in a desktop environment or in a server, so get the best VirtualBox manager for your needs
 
@@ -90,8 +92,22 @@ Download Ubuntu Server image for VirtualBox
 	wget "http://downloads.sourceforge.net/project/virtualboximage/UbuntuServer/11.10/ubuntu-server-11.10-x86.7z"
 	7zr x ubuntu-server-11.10-x86.7z
 
+VirtualBox: add appiance, select "Ubuntu server 11.10.vbox", open prefecenes:
+    disable USB
+    disable Floppy and CD in boot order
+    networking, enable HOST only
+
+boot, the first boot would be slow, because networking try to get IP address from the network.
 Login password: ubuntu/reverse, user "ubuntu" its sudoers
 
+    sudo -s
+    ifconfig eth0 inet 172.16.254.2
+    route add default gw 172.16.254.1
+    echo "nameserver 194.20.8.4" > /etc/resolv.conf
+
+**you need to have setup routing in yout host box, as explained in the previous section**
+
+    aptitude install git
 	git clone http://github.com/vecna/GL-virtual.git
 	cd GL-virtual
 	./virtual-environment-init.sh
@@ -110,7 +126,6 @@ those interface shall be present but only in debug mode (not enabled by default,
 *  debug only global view interface: http://172.16.254.2:8000/globalview
 *  web2py developer access: http://172.16.254.2:8000/admin is enable only if you set a password in globaleaks.conf (admin_password isthe field, and this access permit also to checks error)
 
-What's missing ? 
-----------------
+# What's missing ? 
 
 Every other thing. Seriously, neither the http access stats are easily available. GlobaLeaks 0.1 is a working protoptype of a secure submission system, soon we shall restart the development of a more flexible release.
