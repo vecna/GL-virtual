@@ -54,6 +54,8 @@ and the masquerade rule:
 
 the netmask 172.16.254.0/255.255.255.0 is hardcoded in this release, and the VirtuaBox need this configuration supports. You can't change this (this is one of the bad thing in a 0.1-advanced-prototype release)
 
+in VirtualBox: add appiance, select "GlobaLeaks 0.1 Ubuntu 11.10.vbox"
+
 Oracle HowTo about setup the Host-only networking is here: http://www.virtualbox.org/manual/ch06.html#network_hostonly
 
 ## GlobaLeaks Basic Setup - mandatory configuration
