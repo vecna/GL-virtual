@@ -7,31 +7,31 @@ GWIP="172.16.254.1"
 
 make_copy_or_restore() 
 {
-	name="$1"
-	copyname="$1.gl-virt-copy"
-	if [ -e "$copyname" ]; then
-		echo "${red}previously copy of $name found in $copyname, restored${c1}"
-		cp -f $copyname $name
-	else
-		echo "${red}making backup copy of $name in $copyname${c1}"
-		cp $name $copyname
-	fi
+    name="$1"
+    copyname="$1.gl-virt-copy"
+    if [ -e "$copyname" ]; then
+        echo "${red}previously copy of $name found in $copyname, restored${c1}"
+        cp -f $copyname $name
+    else
+        echo "${red}making backup copy of $name in $copyname${c1}"
+        cp $name $copyname
+    fi
 }
 
 if_exist_remove()
 {
-	if [ -e $1 ] || [ -d $1 ]; then
-		echo "${red}odd ? previously installation detected: $1 removed${c1}"
-		rm -rf $1
-	fi
+    if [ -e $1 ] || [ -d $1 ]; then
+        echo "${red}odd ? previously installation detected: $1 removed${c1}"
+        rm -rf $1
+    fi
 }
 
 check_required_file() 
 {
-	if [ ! -e "$1" ]; then
-		echo "${red}File $1 not exist! $2 ${c1}"
-		exit
-	fi
+    if [ ! -e "$1" ]; then
+        echo "${red}File $1 not exist! $2 ${c1}"
+        exit
+    fi
 }
 
 boxname=`hostname`
@@ -48,10 +48,10 @@ read x
 
 echo "Checking privileges: am I root ? (user = $USER) "
 if [ $USER != "root" ]; then
-	echo "${red}I'm not root, use sudo -s (default password: reverse)${c1}"
-	exit
+    echo "${red}I'm not root, use sudo -s (default password: reverse)${c1}"
+    exit
 else
-	echo "${red}Ok, I'm root, installation possible ${c1}"
+    echo "${red}Ok, I'm root, installation possible ${c1}"
 fi
 
 IFACEFILE="/etc/network/interfaces"
@@ -87,19 +87,32 @@ echo "nameserver 213.92.5.54" >> $RESOLVCFG
 echo "${red}Checking network connection, using http://www.globaleaks.org as test${c1}"
 echo "\tYou can bypass this test using the option \"netisfine\""
 if [ -z "$1" -o "$1" != "netisfine" ]; then
-		ping -c 1 $GWIP
-		cd /tmp
-		rm -rf index.html
-		wget --timeout=2 http://www.globaleaks.org
-		check_required_file "/tmp/index.html" "network not connected: is your hostbox a gateway (checks routing, forwarding, nat) ?"
+    ping -c 1 $GWIP
+    cd /tmp
+    rm -rf index.html
+    wget --timeout=2 http://www.globaleaks.org
+    check_required_file "/tmp/index.html" "network not connected: is your hostbox a gateway (checks routing, forwarding, nat) ?"
 fi
 
 cd /root
+
+echo "${red}Updating aptitute, cleaning system${c1}"
+apt-get update
+apt-get -y remove libx11-data ppp pppoeconf pppconfig
+apt-get -y dist-upgrade
 echo "${red}Installing python-pip, Tor, unzip${c1}"
-aptitude -y install python-pip tor zip
+apt-get -y install python-pip tor zip
 
 echo "${red}Installing web2py${c1}"
 pip install web2py
+
+echo "${red}Patching gluon...${c1}"
+GLUON="/usr/local/lib/python2.7/dist-packages/gluon/rocket.py"
+check_required_file $GLUON "web2py gluon rocket are not in the expected place"
+cat /usr/local/lib/python2.7/dist-packages/gluon/rocket.py | sed -es/SOCKET_TIMEOUT\ =.*/SOCKET_TIMEOUT=300/ > /tmp/xxx
+diff /usr/local/lib/python2.7/dist-packages/gluon/rocket.py /tmp/xxx
+mv /tmp/xxx /usr/local/lib/python2.7/dist-packages/gluon/rocket.py
+echo "${red}Patch applied!${c1}"
 
 echo "${red}adding globaleaks user and group, and /home/globaleaks base directory for installation${c1}"
 groupadd globaleaks
@@ -109,7 +122,7 @@ echo "${red}cloning GlobaLeaks repository${c1}"
 GL01="/home/globaleaks/GL-01/"
 cd /home/globaleaks
 if_exist_remove "$GL01"
-if_exist_remove "/home/globaleaks/master"
+if_exist_remove "/home/globaleaks/virtual"
 wget https://github.com/globaleaks/GlobaLeaks/zipball/virtual
 unzip -q virtual
 mv globaleaks-GlobaLeaks-*/ GL-01
@@ -120,6 +133,7 @@ mkdir /home/globaleaks/HS
 chown debian-tor.debian-tor /home/globaleaks/HS
 
 TORRC="/etc/tor/torrc"
+check_required_file $TORRC "Tor don't seem installed in the expected path"
 make_copy_or_restore $TORRC
 echo "HiddenServiceDir /home/globaleaks/HS" >> $TORRC
 echo "HiddenServicePort 80 172.16.254.2:8000" >> $TORRC
